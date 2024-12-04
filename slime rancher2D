@@ -16,19 +16,53 @@ BLUE = (0,0,255)
 pw, ph = 10, 20
 px, py = 50, 50
 vx, vy = 5, 0
-
+state = 1
 A = 0 
 D = 1
 W = 2
 S = 3
-
-
-#CONSTANTS 
-
 keys = [False, False, False, False] #this list holds whether each key has been pressed
+mapNum = 1 
+#CONSTANTS 
+map = [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+       [2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,1,2,2,2,2,2],
+       [2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,1,3,3,3,3,2],
+       [2,1,1,2,2,2,2,1,1,1,1,1,1,2,2,2,2,1,1,3,3,3,3,2],
+       [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,2],
+       [2,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,3,3,3,3,2],
+       [2,3,2,3,3,3,2,2,1,1,1,3,2,3,3,3,2,2,1,3,3,3,3,2],
+       [2,3,3,3,3,3,1,1,1,1,1,3,2,3,3,3,1,1,1,3,3,3,3,2],
+       [5,3,3,3,3,1,1,1,1,1,1,3,2,3,3,1,1,1,1,3,3,3,3,5],
+       [5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5],
+       [2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,1,3,3,3,3,2],
+       [2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,1,3,3,3,3,2],
+       [2,1,1,2,2,2,2,1,1,1,1,1,1,2,2,2,2,1,1,3,3,3,3,2],
+       [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,2],
+       [2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,2,2,1,1,3,3,3,3,2],
+       [2,3,2,3,3,3,2,2,1,1,1,3,2,3,3,3,2,2,1,3,3,3,3,2],
+       [2,3,2,3,3,3,1,1,1,1,1,3,2,3,3,3,1,1,1,3,3,3,3,2],
+       [2,2,2,2,2,2,2,2,2,1,2,5,5,2,2,2,2,2,2,3,3,3,3,2]]
 
-grass2 = pygame.image.load('images/grass2.jpg')
+grass2 = pygame.image.load('grass2.jpg')
 
+def draw(drawPlayer):
+    if state == 1:
+        screen.fill((0,0,0))#wipe screen
+        
+            
+            #print(p1.vx, p1.vy, p1.xpos, p1.ypos)
+        if mapNum == 1:    #map
+            for i in range(len(map)):
+                for j in range(len(map[i])):
+                    if map[i][j] == 1:
+                        screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
+                    if map[i][j] == 2:
+                        screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
+                    if map[i][j] == 3:
+                        screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
+                    if map[i][j] == 5:
+                        screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
+        pygame.display.flip()
 
 while True: #GAME LOOP ###############################################################
     clock.tick(60)
@@ -38,7 +72,6 @@ while True: #GAME LOOP #########################################################
         if event.type == pygame.QUIT:
             pygame.quit()
             
-    keys = pygame.key.get_pressed()
     
     #Physics section--------------------------------------------------
     
@@ -58,10 +91,12 @@ while True: #GAME LOOP #########################################################
     if keys[pygame.K_w]:
         py -= vx
   
-   
-    screen.fill(grass2)
+    key = pygame.keys.get_pressed()
     
+    screen.fill(WHITE)
+
+    #screen.blit(screen, grass2)
+    draw(True)
     pygame.draw.rect(screen,BLUE, (px,py,pw,ph))
-    
-    
+
     pygame.display.flip()
