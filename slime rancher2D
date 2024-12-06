@@ -1,6 +1,6 @@
 import pygame
 import random
-
+from player import Player
 pygame.init()
 screen = pygame.display.set_mode((800,800))
 pygame.display.set_caption("slime rancher")
@@ -13,9 +13,10 @@ BLUE = (0,0,255)
 
 
 #Player variables
+p1 = Player()
 pw, ph = 10, 20
 px, py = 50, 50
-vx, vy = 5, 0
+vx, vy = 0, 0
 state = 1
 A = 0 
 D = 1
@@ -45,9 +46,60 @@ map = [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
 
 grass2 = pygame.image.load('grass2.jpg')
 
-def draw(drawPlayer):
+
+
+while True: #GAME LOOP ###############################################################
+    clock.tick(60)
+    
+    #even handling-------------------------------------
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            
+        keys = pygame.key.get_pressed()
+    #Physics section--------------------------------------------------
+    
+    #Player input
+    
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT or keys[pygame.K_a]:
+                keys[0] = True
+            else:
+                keys[0] = False
+
+
+            if event.key == pygame.K_RIGHT or keys[pygame.K_d]:
+                keys[1] = True
+            else:
+                keys[1] = False
+
+            if event.key == pygame.K_UP or keys[pygame.K_w]:
+                keys[2] = True
+            else:
+                keys[2] = False
+            if event.key == pygame.K_DOWN or keys[pygame.K_s]:
+                keys[3] = True
+            else:
+                keys[3] = False
+
+    #elif event.type == pygame.KEYUP:
+        #if event.key == pygame.K_LEFT or event.key == ord('a'):
+            
+        #if event.key == pygame.K_RIGHT or event.key == ord('d'):
+            #print('right stop')    
+  
+    px += vx
+    py += vy
+
+    if mapNum == 1:
+        p1.move(keys, map)
+   
+    
+    screen.fill(WHITE)
+
+    #screen.blit(screen, grass2)
     if state == 1:
-        screen.fill((0,0,0))#wipe screen
+        
         
             
             #print(p1.vx, p1.vy, p1.xpos, p1.ypos)
@@ -62,41 +114,9 @@ def draw(drawPlayer):
                         screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
                     if map[i][j] == 5:
                         screen.blit(grass2, (j * 50, i * 50), (0, 0, 50, 50))
-        pygame.display.flip()
-
-while True: #GAME LOOP ###############################################################
-    clock.tick(60)
-    
-    #even handling-------------------------------------
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            
-    
-    #Physics section--------------------------------------------------
-    
-    #Player input
-    
-    if keys[pygame.K_a]:
-        px -= vx
         
-    
-    if keys[pygame.K_d]:
-        px += vx
-       
-    
-    if keys[pygame.K_s]:
-        py += vx
-
-    if keys[pygame.K_w]:
-        py -= vx
-  
-    key = pygame.keys.get_pressed()
-    
-    screen.fill(WHITE)
-
-    #screen.blit(screen, grass2)
-    draw(True)
-    pygame.draw.rect(screen,BLUE, (px,py,pw,ph))
+        p1.draw(screen) 
 
     pygame.display.flip()
+
+pygame.quit()
