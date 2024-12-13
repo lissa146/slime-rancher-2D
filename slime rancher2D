@@ -56,31 +56,37 @@ while True: #GAME LOOP #########################################################
         if event.type == pygame.QUIT:
             pygame.quit()
             
-        keys = pygame.key.get_pressed()
+        #keys = pygame.key.get_pressed()
     #Physics section--------------------------------------------------
     
     #Player input
     
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT or keys[pygame.K_a]:
-                keys[0] = True
-            else:
-                keys[0] = False
+            if event.key == pygame.K_a:
+                keys[A] = True
 
+            if event.key == pygame.K_d:
+                keys[D] = True
 
-            if event.key == pygame.K_RIGHT or keys[pygame.K_d]:
-                keys[1] = True
-            else:
-                keys[1] = False
+            if event.key == pygame.K_w:
+                keys[W] = True
 
-            if event.key == pygame.K_UP or keys[pygame.K_w]:
-                keys[2] = True
-            else:
-                keys[2] = False
-            if event.key == pygame.K_DOWN or keys[pygame.K_s]:
-                keys[3] = True
-            else:
-                keys[3] = False
+            if event.key == pygame.K_s:
+                keys[S] = True
+        
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_a:
+                keys[A] = False
+
+            if event.key == pygame.K_d:
+                keys[D] = False
+
+            if event.key == pygame.K_w:
+                keys[W] = False
+ 
+            if event.key == pygame.K_s:
+                keys[S] = False
+                
 
     #elif event.type == pygame.KEYUP:
         #if event.key == pygame.K_LEFT or event.key == ord('a'):
@@ -91,8 +97,8 @@ while True: #GAME LOOP #########################################################
     px += vx
     py += vy
 
-    if mapNum == 1:
-        p1.move(keys, map)
+    #if mapNum == 1:
+    p1.move(keys)
    
     
     screen.fill(WHITE)
@@ -118,5 +124,4 @@ while True: #GAME LOOP #########################################################
         p1.draw(screen) 
 
     pygame.display.flip()
-
 pygame.quit()
