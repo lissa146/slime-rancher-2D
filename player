@@ -4,12 +4,11 @@ Chicken = pygame.image.load('chicken.png') #load your spritesheet
 Chicken.set_colorkey((255, 0, 255))
 
 #contants
-LEFT = 0
-RIGHT = 1
-UP = 2
-DOWN = 3
+A = 0
+D = 1
+W = 2
+S = 3
 SPACE = 4
-W = 5
 state = 1
 
 class Player:
@@ -25,7 +24,7 @@ class Player:
         self.RowNum = 2
         self.frameNum = 0
         self.ticker = 0
-        self.direction = RIGHT
+        self.direction = A
         self.health = 200
         self.isAlive = False
         self.inventory = []
@@ -40,31 +39,30 @@ class Player:
             pygame.draw.rect(screen, (255,255, 255), (200 + 50*i, 750, 50, 50), 2)
 
 
-    def move(self, keys, map):
+    def move(self, keys):
         
         #left/right---------------------
         # left movement
-        if keys[LEFT] == True:
-            print("left pressed")
+        if keys[A] == True:
             self.vx = -3
             self.RowNum = 2
-            self.direction = LEFT
+            self.direction = A
         #right movement
-        elif keys[RIGHT] == True:
+        elif keys[D] == True:
             self.vx = 3
             self.RowNum = 3
-            self.direction = RIGHT
+            self.direction = D
         else:
              self.vx = 0
         #up/down-------------------
-        if keys[UP] == True:
+        if keys[W] == True:
             self.vy = -3
             self.RowNum = 0
-            self.direction = UP
-        elif keys[DOWN] == True:
+            self.direction = W
+        elif keys[S] == True:
             self.vy = 3
             self.RowNum = 1
-            self.direction = DOWN
+            self.direction = S
         else:
             self.vy = 0
             
